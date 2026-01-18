@@ -225,8 +225,13 @@ class GlobalSensor:
 # 5. واجهة التطبيق (UI Application)
 # ==========================================
 st.sidebar.title(T['sidebar'])
-api_key = st.sidebar.text_input(T['api_lbl'], type="password")
-city_input = st.sidebar.text_input(T['city_lbl'], placeholder=T['city_ph'])
+# محاولة جلب المفتاح من أسرار السحابة أولاً
+if "OWM_API_KEY" in st.secrets:
+    api_key = st.secrets["OWM_API_KEY"]
+else:
+    # إذا لم يوجد في الأسرار، نطلبه من المستخدم في الواجهة
+    api_key = st.sidebar.text_input(T['api_lbl'], type="password")
+    city_input = st.sidebar.text_input(T['city_lbl'], placeholder=T['city_ph'])
 run_btn = st.sidebar.button(T['run'])
 
 st.title(T['title'])
